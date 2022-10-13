@@ -8,7 +8,7 @@ var ItemSchema = new mongoose.Schema(
     slug: { type: String, lowercase: true, unique: true },
     title: String,
     description: String,
-    image: String,
+    image: { type: String, required: true },
     favoritesCount: { type: Number, default: 0 },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
     tagList: [{ type: String }],
@@ -22,7 +22,7 @@ ItemSchema.plugin(uniqueValidator, { message: "is already taken" });
 ItemSchema.pre("validate", function(next) {
   if (!this.slug) {
     this.slugify();
-  }
+  } 
 
   next();
 });
